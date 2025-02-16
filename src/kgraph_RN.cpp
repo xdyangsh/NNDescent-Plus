@@ -1022,7 +1022,7 @@ namespace kgraph {
         void LoadSampleGroundtruth(std::vector<std::vector<uint32_t>> &knng,
                             std::vector<uint32_t> &ids,
                             const char *path) {
-            std::ifstream ifs(path, std::ios::out | std::ios::binary);
+            std::ifstream ifs(path, std::ios::in | std::ios::binary);
             cout << "Loading ground truth from: " << path << endl;
             assert(ifs.is_open());
 
@@ -1055,11 +1055,11 @@ namespace kgraph {
             //assert(knn_vec.size() >= 10000);
             //assert(knn_vec[0].size() <= 100);
             
-            
+            int num = exact_knng.size();
             int nk = params.K;
             size_t hit_case = 0;
 #pragma omp parallel for reduction(+:hit_case)
-            for (int i=0;i<10000;i++) {
+            for (int i=0;i<num;i++) {
                 uint32_t sample_id=ids[i];
                 //printf("%d\n", i);
                 std::vector<int> ann;
@@ -1076,7 +1076,7 @@ namespace kgraph {
                     
                 hit_case += computeSingleRecall(enn, ann);
             }
-            float re = (float) hit_case / (float) 10000 / (float) nk;
+            float re = (float) hit_case / (float) num / (float) nk;
             //std::cout << re<< std::endl;
             return re;
         }

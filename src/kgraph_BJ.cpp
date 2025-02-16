@@ -1005,7 +1005,7 @@ namespace kgraph {
         void LoadSampleGroundtruth(std::vector<std::vector<uint32_t>> &knng,
                             std::vector<uint32_t> &ids,
                             const char *path) {
-            std::ifstream ifs(path, std::ios::out | std::ios::binary);
+            std::ifstream ifs(path, std::ios::in | std::ios::binary);
             cout << "Loading ground truth from: " << path << endl;
             assert(ifs.is_open());
 
@@ -1034,32 +1034,32 @@ namespace kgraph {
             ifs.close();
         }
         float computeOverallRecall(std::vector<std::vector<uint32_t>> &exact_knng,
-                                  std::vector<uint32_t> &ids) {
+            std::vector<uint32_t> &ids) {
             //assert(knn_vec.size() >= 10000);
             //assert(knn_vec[0].size() <= 100);
-            
-            
+
+            int num = exact_knng.size();
             int nk = params.K;
             size_t hit_case = 0;
 #pragma omp parallel for reduction(+:hit_case)
-            for (int i=0;i<10000;i++) {
-                uint32_t sample_id=ids[i];
-                //printf("%d\n", i);
-                std::vector<int> ann;
-                // get exact result
-                std::vector<int> enn;
-                enn.resize(nk);
-                ann.resize(nk);
+            for (int i=0;i<num;i++) {
+            uint32_t sample_id=ids[i];
+            //printf("%d\n", i);
+            std::vector<int> ann;
+            // get exact result
+            std::vector<int> enn;
+            enn.resize(nk);
+            ann.resize(nk);
 
-                for (int j=0;j<nk;j++)
-                {
-                    ann[j] = nhoods[sample_id].pool[j].id;
-                    enn[j] = exact_knng[i][j];
-                }
-                    
-                hit_case += computeSingleRecall(enn, ann);
+            for (int j=0;j<nk;j++)
+            {
+            ann[j] = nhoods[sample_id].pool[j].id;
+            enn[j] = exact_knng[i][j];
             }
-            float re = (float) hit_case / (float) 10000 / (float) nk;
+
+            hit_case += computeSingleRecall(enn, ann);
+            }
+            float re = (float) hit_case / (float) num / (float) nk;
             //std::cout << re<< std::endl;
             return re;
         }

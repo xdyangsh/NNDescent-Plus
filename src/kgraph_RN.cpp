@@ -1147,6 +1147,7 @@ namespace kgraph
                     }
                 }
             }
+#pragma omp parallel for
             for (unsigned i = 0; i < N; ++i)
             {
                 auto &rnn_new = nhoods[i].rnn_new;

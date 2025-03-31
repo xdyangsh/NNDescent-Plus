@@ -1317,7 +1317,7 @@ namespace kgraph
                     //     sum_recall += (count_right / neighbornumber);
                     // }
                     // float myrecall = computeOverallRecall(ground_truth_knng, ground_truth_ids);
-                    cout << myrecall << endl;
+                    // cout << myrecall << endl;
                     info.delta = mean(delta);
                     info.recall = mean(recall);
                     info.M = mean(M);

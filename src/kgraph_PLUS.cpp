@@ -1223,6 +1223,13 @@ namespace kgraph
                     }
                 }
             }
+#pragma omp parallel for
+            for (unsigned i = 0; i < N; ++i)
+            {
+                auto &rnn_new = nhoods[i].rnn_new;
+                if (rnn_new.size() > 0)
+                    rnn_new.shrink_to_fit();
+            }
         }
 
         void write_info(vector<float> &all_cost, vector<float> &all_recall, vector<float> &all_time, vector<long> &all_peakMemory, vector<float> &all_join, vector<float> &all_update, long &FixedMemory, string data)

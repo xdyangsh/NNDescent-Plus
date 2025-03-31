@@ -1214,6 +1214,7 @@ namespace kgraph
             : oracle(o), params(p), pinfo(r), nhoods(o.size()), n_comps(0), truth_path(truth_path)
         {
             no_dist = false;
+            boost::timer::cpu_timer timer;
             cout << "读取groundtruth前当前内存:" << getCurrentMemoryUsage() << endl;
             // vector<vector<uint32_t>> ground_truth_knng;
             // vector<uint32_t> ground_truth_ids;
@@ -1246,7 +1247,7 @@ namespace kgraph
             if (verbosity > 0)
                 cerr << "Initializing..." << endl;
             // initialize nhoods
-            boost::timer::cpu_timer timer;
+            
             init();
 
             // iterate until converge

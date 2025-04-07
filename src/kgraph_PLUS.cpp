@@ -1235,7 +1235,7 @@ namespace kgraph
         void write_info(vector<float> &all_cost, vector<float> &all_recall, vector<float> &all_time, vector<long> &all_peakMemory, vector<float> &all_join, vector<float> &all_update, long &FixedMemory, string data)
         {
             string path;
-            path = string("./result/++/") + string("kgraph_data(") + data + string(")_L") + std::to_string(params.L) + string("_S") + std::to_string(params.S) + string("_R") + std::to_string(params.R) + string(".csv");
+            path = string("./result/++/") + string("kgraph_data(") + data + string(")_L") + std::to_string(params.L) + string("_S") + std::to_string(params.S) + string("_R") + std::to_string(params.R) + string("_I") + std::to_string(params.iterations) + string("_K") + std::to_string(params.K) + string(".csv");
             ofstream ofs(path, std::ios::out | std::ios::app);
             if (ofs.is_open())
             {

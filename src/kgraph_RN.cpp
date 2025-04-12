@@ -882,12 +882,12 @@ namespace kgraph
             template <typename C>
             void join(C callback)
             {
-                for (unsigned i = 0; i < pool.size(); i++)
+                for (unsigned i = 0; i < L; i++)
                 {
                     // std::cout<<pool[i].flag<<std::endl;
                     if (pool[i].flag == 0x2)
                     {
-                        for (unsigned j = i + 1; j < pool.size(); j++)
+                        for (unsigned j = i + 1; j < L; j++)
                         {
                             if ((pool[j].flag == 0x2) || (pool[j].flag == 0x3))
                             { //(nn_new) and (nn_new nn_old)
@@ -907,7 +907,7 @@ namespace kgraph
                     }
                     else if (pool[i].flag == 0x3)
                     {
-                        for (unsigned j = i + 1; j < pool.size(); j++)
+                        for (unsigned j = i + 1; j < L; j++)
                         {
                             if (pool[j].flag == 0x2)
                             { //(nn_old) and (nn_new)
